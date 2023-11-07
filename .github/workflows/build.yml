@@ -2,10 +2,10 @@ name: build flutter web
 on:
   push:
     branches:
-      - main
+      - dev
   pull_request:
     branches:
-      - main
+      - dev
 jobs:
   build_web:
     name: Build Flutter (Web)
