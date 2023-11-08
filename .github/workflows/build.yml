@@ -18,13 +18,19 @@ jobs:
             flutter-version: '3.13.9'
       - run: echo '${{ secrets.SECRET_KEYS_CONTENTS }}' > keys.json
       - run: cat keys.json
-      - run: mkdir downloads
       - run: flutter pub get
       - run: flutter config --enable-web
       - run: flutter analyze
       - run: flutter build web --release --dart-define-from-file=keys.json
-      - name: Step 3 - Use the Upload Artifact GitHub Action
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: web-build
-          path: downloads
+          path: build/web
+      - name: Upload Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: web-build
+      - name: Display structure of build files
+        run: ls -R
+        working-directory: ./web
