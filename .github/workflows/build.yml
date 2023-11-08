@@ -16,6 +16,10 @@ jobs:
         with:
             channel: 'stable'
             flutter-version: '3.13.9'
+
+      - run: echo '{{ secrets.SECRET_KEYS_CONTENTS }}' > keys.json
+      - run cat keys.json
       - run: flutter pub get
       - run: flutter config --enable-web
+      - run: flutter analyze
       - run: flutter build web --release
