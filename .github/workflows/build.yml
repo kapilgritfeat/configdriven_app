@@ -11,14 +11,20 @@ jobs:
     name: Build Flutter (Web)
     runs-on: ubuntu-latest
     steps:
-#      - uses: actions/checkout@v3
-#      - uses: subosito/flutter-action@v2
-#        with:
-#            channel: 'stable'
-#            flutter-version: '3.13.9'
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+            channel: 'stable'
+            flutter-version: '3.13.9'
       - run: echo '${{ secrets.SECRET_KEYS_CONTENTS }}' > keys.json
       - run: cat keys.json
-#      - run: flutter pub get
-#      - run: flutter config --enable-web
-#      - run: flutter analyze
-#      - run: flutter build web --release
+      - run: mkdir downloads
+      - run: flutter pub get
+      - run: flutter config --enable-web
+      - run: flutter analyze
+      - run: flutter build web --release --dart-define-from-file=keys.json
+      - name: Step 3 - Use the Upload Artifact GitHub Action
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-build
+          path: downloads
