@@ -22,15 +22,10 @@ jobs:
           SECRET_KEYS_CONTENTS: ${{ secrets.SECRET_KEYS_CONTENTS }}
       - run: echo $SECRET_KEYS_CONTENTS >> keys.json
 #      - run: cat keys.json
-      - run: |
-          flutter pub get
-          flutter config --enable-web
-          flutter analyze
-          flutter build web --release --dart-define-from-file=keys.json
-#      - run: flutter config --enable-web
-#      - run: flutter analyze
-#      - run: flutter build web --release --dart-define-from-file=keys.json
-#      - name: Upload Artifact
+      - run: flutter config --enable-web
+      - run: flutter analyze
+      - run: flutter build web --release --dart-define-from-file=keys.json
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: web-build
